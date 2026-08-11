@@ -189,6 +189,7 @@ void app_main(void) {
 | **2** | ipad 7A:EC:11:CF:DB:1A | -45 | Near | I (109005) SMART_ATTENDANCE: [ATTENDANCE]: Student manually confirmed check-in via Web UI! |
 
 ![alt text](image-2.png)
+![alt text](image-3.png)
 ---
 
 ## 6. คำถามท้ายการทดลอง (Post-Lab Questions)

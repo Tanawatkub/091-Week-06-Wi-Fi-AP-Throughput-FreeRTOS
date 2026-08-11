@@ -112,6 +112,7 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 บันทึก Raw JSON Response จาก Browser:
 ![alt text](image-1.png)
 
+
 ```json
 {"temperature":33.30,"humidity":66.20,"light_lux":245,"timestamp_ms":360070}
 
