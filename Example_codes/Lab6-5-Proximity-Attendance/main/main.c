@@ -12,7 +12,7 @@
 
 static const char *TAG = "SMART_ATTENDANCE";
 
-#define AP_SSID          "CLASSROOM_ATTENDANCE_AP"
+#define AP_SSID          "CLASSROOM_ATTENDANCE_AP_0091"
 #define AP_PASS          "12345678"
 #define RSSI_THRESHOLD   -60
 
@@ -26,8 +26,24 @@ typedef struct {
 static student_record_t s_records[5];
 static int s_student_count = 0;
 
+// HTTP POST Handler สำหรับปุ่ม Confirm Check-in
+static esp_err_t http_checkin_post_handler(httpd_req_t *req) {
+    // ส่งหน้าเว็บแจ้งเตือนว่าลงชื่อสำเร็จ พร้อมปุ่มกลับไปหน้าแรก
+    const char *resp = "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'>"
+                       "<style>body{font-family:Arial;text-align:center;padding:50px;}</style></head>"
+                       "<body><h2 style='color:green;'>Check-in Successful!</h2>"
+                       "<p>Your attendance has been recorded.</p>"
+                       "<br><a href='/'><button style='padding:10px 20px; font-size: 16px;'>Go Back</button></a>"
+                       "</body></html>";
+                       
+    httpd_resp_send(req, resp, HTTPD_RESP_USE_STRLEN);
+    
+    ESP_LOGI(TAG, "[ATTENDANCE]: Student manually confirmed check-in via Web UI!");
+    return ESP_OK;
+}
+
 static esp_err_t http_attendance_html_handler(httpd_req_t *req) {
-    char resp[1024];
+    char resp[2048]; // ขยายขนาด buffer เป็น 2048 เพื่อรองรับข้อมูลที่ยาวขึ้นเมื่อเชื่อมต่อหลายเครื่อง
     int len = snprintf(resp, sizeof(resp),
         "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'>"
         "<style>body{font-family:Arial;text-align:center;background:#f4f4f9;padding:20px;}"
@@ -44,7 +60,7 @@ static esp_err_t http_attendance_html_handler(httpd_req_t *req) {
         "<table><tr><th>Device MAC</th><th>RSSI (dBm)</th><th>Proximity Status</th></tr>");
 
     for (int i = 0; i < s_student_count; i++) {
-        char status_str[32];
+        char status_str[64]; // ขยายขนาด buffer เป็น 64 เพื่อป้องกัน format-truncation error
         if (s_records[i].rssi >= RSSI_THRESHOLD) {
             snprintf(status_str, sizeof(status_str), "<font color='green'><b>NEAR (Valid)</b></font>");
         } else {
@@ -65,6 +81,7 @@ static void start_web_server(void) {
     httpd_handle_t server = NULL;
 
     if (httpd_start(&server, &config) == ESP_OK) {
+        // ลงทะเบียนสำหรับหน้าเว็บหลัก (GET /)
         httpd_uri_t uri_get = {
             .uri      = "/",
             .method   = HTTP_GET,
@@ -72,6 +89,16 @@ static void start_web_server(void) {
             .user_ctx = NULL
         };
         httpd_register_uri_handler(server, &uri_get);
+
+        // ลงทะเบียนสำหรับปุ่ม Check-in (POST /checkin)
+        httpd_uri_t uri_post = {
+            .uri      = "/checkin",
+            .method   = HTTP_POST,
+            .handler  = http_checkin_post_handler,
+            .user_ctx = NULL
+        };
+        httpd_register_uri_handler(server, &uri_post);
+
         ESP_LOGI(TAG, "Attendance Web Server Started at http://192.168.4.1");
     }
 }
