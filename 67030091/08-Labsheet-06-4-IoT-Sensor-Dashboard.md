@@ -122,7 +122,7 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 ## 8. คำถามท้ายการทดลอง (Post-Lab Questions)
 
 
-# 1. เหตุใดจึงต้องใช้ **Mutex** ในการป้องกันการเข้าถึงตัวแปร `g_latest_data` ร่วมกันระหว่าง `vNetworkTask` และ HTTP Handler? ถ้าไม่ใช้จะเกิดอะไรขึ้น?
+ 1. เหตุใดจึงต้องใช้ **Mutex** ในการป้องกันการเข้าถึงตัวแปร `g_latest_data` ร่วมกันระหว่าง `vNetworkTask` และ HTTP Handler? ถ้าไม่ใช้จะเกิดอะไรขึ้น?
 
 **ตอบ:**
 จำเป็นต้องใช้ Mutex เพราะระบบทำงานแบบ Multi-Tasking (Asynchronous) 
@@ -131,7 +131,7 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 
 ---
 
-# 2. `esp_http_server` รัน Handler บน Thread ใด — เป็น Thread เดียวกับ FreeRTOS Task ของเราหรือไม่?
+ 2. `esp_http_server` รัน Handler บน Thread ใด — เป็น Thread เดียวกับ FreeRTOS Task ของเราหรือไม่?
 
 **ตอบ:**
 `esp_http_server` **ไม่ได้รันอยู่บน Thread (Task) เดียวกับ `vSensorTask` หรือ `vNetworkTask` ของเรา** 
@@ -139,7 +139,7 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 
 ---
 
-# 3. การที่ Dashboard ใช้ `<meta http-equiv="refresh" content="2">` แทนที่จะใช้ JavaScript `fetch()` มีข้อดีและข้อเสียอย่างไร?
+ 3. การที่ Dashboard ใช้ `<meta http-equiv="refresh" content="2">` แทนที่จะใช้ JavaScript `fetch()` มีข้อดีและข้อเสียอย่างไร?
 
 **ตอบ:**
 * **ข้อดี (Pros):**
