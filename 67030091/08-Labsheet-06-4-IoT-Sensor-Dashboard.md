@@ -88,8 +88,12 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 
 ตัวอย่างหน้า browser
 ![](images/253776.jpg)
-![alt text](IMG_4683.PNG) ![alt text](IMG_4685.PNG) ![alt text](IMG_4686.PNG)
 
+```
+```
+![alt text](IMG_4683.PNG) ![alt text](IMG_4685.PNG) ![alt text](IMG_4686.PNG)
+```
+```
 ---
 
 ## 7. ตารางบันทึกผลการทดลอง (Experiment Results)
@@ -106,8 +110,11 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 ### 7.2 ทดสอบ JSON API (`/api/data`)
 
 บันทึก Raw JSON Response จาก Browser:
+```
+```
 ![alt text](image-1.png)
-
+```
+```
 ```json
 {"temperature":33.30,"humidity":66.20,"light_lux":245,"timestamp_ms":360070}
 
