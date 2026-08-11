@@ -76,6 +76,6 @@ void app_main(void) {
         return;
     }
 
-    xTaskCreate(vSensorTask, "SensorCollectorTask", 3072, NULL, 5, NULL);
+    xTaskCreate(vSensorTask, "SensorCollectorTask", 1024, NULL, 5, NULL);
     xTaskCreate(vNetworkTask, "NetworkCommTask", 4096, NULL, 4, NULL);
 }

@@ -11,13 +11,14 @@
 #include "esp_netif.h"
 #include "esp_timer.h"
 #include "esp_wifi.h"
+#include "esp_mac.h"
 #include "nvs_flash.h"
 #include "lwip/inet.h"
 #include "lwip/sockets.h"
 
 static const char *TAG = "CLIENT_PROFILER";
 
-#define AP_SSID            "MY_ESP32_AP"
+#define AP_SSID            "MY_ESP32_AP_0091&0073"
 #define AP_PASS            "12345678"
 #define SERVER_IP          "192.168.4.1"
 #define SERVER_PORT        8080
